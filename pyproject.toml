@@ -4,6 +4,7 @@ build-backend = "flit.buildapi"
 
 [tool.flit.metadata]
 module = "maestro"
+dist-name = "maestro-tools"
 author = "Fábio Macêdo Mendes"
 author-email = "fabiomacedomendes@gmail.com"
 home-page = "http://github.com/fabiommendes/maestro/"

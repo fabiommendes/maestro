@@ -440,8 +440,7 @@ def nb_config(cfg):
     # c.ClearSolutions.begin_solution_delimeter = 'BEGIN SOLUTION'
 
     # The code snippet that will replace code solutions
-    cfg.ClearSolutions.code_stub = {
-        'python': 'NotImplemented # escreva sua solução aqui...'}
+    cfg.ClearSolutions.code_stub = {'python': '...'}
 
     # The delimiter marking the end of a solution
     # c.ClearSolutions.end_solution_delimeter = 'END SOLUTION'
