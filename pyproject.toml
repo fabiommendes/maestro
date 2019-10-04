@@ -11,6 +11,8 @@ classifiers = ["License :: OSI Approved :: MIT License"]
 requires = [
     "pytest >= 4.0",
     "click >= 7.0",
+    "hyperpython ~= 1.1.1",
+    "sidekick ~= 0.5.2",
     "unidecode",
     "toml",
 ]
