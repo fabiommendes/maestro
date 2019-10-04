@@ -1,0 +1,6 @@
+dist/
+.cache/
+.idea/
+.vscode
+.coverage
+__pycache__/

@@ -1,0 +1,19 @@
+[build-system]
+requires = ["flit"]
+build-backend = "flit.buildapi"
+
+[tool.flit.metadata]
+module = "maestro"
+author = "Fábio Macêdo Mendes"
+author-email = "fabiomacedomendes@gmail.com"
+home-page = "http://github.com/fabiommendes/maestro/"
+classifiers = ["License :: OSI Approved :: MIT License"]
+requires = [
+    "pytest >= 4.0",
+    "click >= 7.0",
+    "unidecode",
+    "toml",
+]
+
+[tool.flit.scripts]
+maestro = "maestro.cli:main"
