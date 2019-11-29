@@ -100,9 +100,49 @@ def export(path, output, simple, normalize, sort):
 
 
 # ==============================================================================
+# maestro git <command>
+# ==============================================================================
+@cli.group()
+def git():
+    pass
+
+
+@git.command()
+@click.argument('source')
+@click.option(
+    '--repo', '-r', default=None,
+    help='Name repository URL column',
+)
+@click.option(
+    '--path', '-p', default=None,
+    help='Column with the output path',
+)
+@click.option(
+    '--branch', '-b', default=None,
+    help='Column with branch name',
+)
+@click.option(
+    '--default-branch', default='master',
+    help='Default branch, if not given',
+)
+@click.option(
+    '--depth', '-d', default=None,
+    help='Branch depth',
+)
+def clone(source, repo, path, branch, default_branch, depth):
+    """
+    Clone all given git repositories.
+    """
+    kwargs = locals()
+    source = kwargs.pop('source')
+
+    from .git import clone_repos_at as do
+    do(source, **kwargs)
+
+
+# ==============================================================================
 # Main
 # ==============================================================================
-
 def main():
     return cli()
 
