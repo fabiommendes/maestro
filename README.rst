@@ -2,22 +2,58 @@
 Maestro
 =======
 
-Maestro is a personal project that helps me in many tasks related to grading and
-classroom management. Since it may be useful to other students and educators, I share
-the code here in a *AS IS* basis.
+Maestro is a personal project that helps me in many classroom management tasks. It may be useful to other students
+and educators, and the code is shared here in a *as is* basis. Documentation exists only to remind future me of how
+things work, and expect it to have some serious missing pieces.
 
-I *do not* recommend that you use it as a library of any sort. Unless other people join
-to make a community, Maestro will be in a permanent alpha stage and you should expect
-major breaks after any version change. If you find some function here useful, I recommend
-to copy and paste it into your own project (it is licenced under permissive MIT). If you
-want to use in a notebook or as part of your toolset, I recommend to always specify an
+I **do not** recommend that you use it as a library of any sort. Unless other developers join
+this project, Maestro will be in a permanent alpha stage and you should expect
+major breaks after any version change. If you find some parts of it useful, I recommend
+to just copy and paste it into your own project (it is licenced under permissive MIT). If you
+want to use in a notebook or as part of a toolset, I recommend to always specify an
 exact version number to avoid surprises.
+
+Problem set Management
+======================
+
+#TODO
+
+```
+<classroom>
+  |- sources
+  |  |- [problem set]*
+  |- submissions
+  |  |- [problem]*
+  |  |  |- [student]*
+  |  |  |  |- data/
+  |  |  |  |  \- ... files and symlinks relevant to submission
+  |  |  |  \- info.toml
+  \- conf.toml
+
+```
+
+
+Classroom Management
+====================
+
+Repository management
+=====================
+
+Maestro helps managing Git repositories used to submit student code.
+
+
+Cloud functions
+===============
+
+
+Frontend
+========
 
 
 Automated grading based on unit tests
 =====================================
 
-First we create a reference implementation. Type annotations helps Maestro
+First, we create a reference implementation. Type annotations helps Maestro
 automatically generate valid random inputs.
     
 
@@ -75,7 +111,7 @@ correct answer is known and instead of creating a very comprehensive test suite,
 we can simply compare the student's implementation with the reference one.
 
 Maestro provides some test classes and utility functions that helps with that
-sittuation by making most of the tests for you.
+situation by making most of the tests for you.
 
 
 .. code-block:: python

@@ -4,8 +4,8 @@ from inspect import Signature
 from types import FunctionType
 
 import bytecode
-
 from sidekick import placeholder as _, pipe, map
+
 from ..utils.exec import safe_exec
 
 LOAD_FAST = dis.opmap['LOAD_FAST']
@@ -51,8 +51,7 @@ def check_locals(*args, **_variables):
         func: FunctionType
         func, *args = func
         arg_names = pipe(
-            Signature.from_callable(func)
-                .parameters.keys(),
+            Signature.from_callable(func).parameters.keys(),
             map(_.name))
         kwargs.update(zip(arg_names, args))
 

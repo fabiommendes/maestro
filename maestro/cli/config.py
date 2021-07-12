@@ -2,7 +2,7 @@ from collections.abc import MutableMapping
 
 import toml
 
-from sidekick import lazy
+from sidekick.properties import lazy
 
 
 class TomlConfigFile(MutableMapping):

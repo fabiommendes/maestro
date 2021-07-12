@@ -141,6 +141,151 @@ def clone(source, repo, path, branch, default_branch, depth):
 
 
 # ==============================================================================
+# Shell commands
+# ==============================================================================
+@cli.command()
+@click.argument('source')
+@click.argument('dest')
+@click.option(
+    '--force', '-f', is_flag=True,
+    help='Force copy of duplicate files',
+)
+def cp(source, dest, force):
+    from subprocess import run
+    import os
+
+    def do(cmd):
+        if force:
+            cmd = [*cmd, '-f']
+        print(' '.join(cmd))
+        run(cmd)
+
+    dest = dest.lstrip('.')
+    source = os.path.abspath(source)
+    for p in os.listdir(os.getcwd()):
+        if not os.path.isdir(p):
+            continue
+        subdir = os.path.abspath(p)
+        cmd = ['cp', source, os.path.join(subdir, dest), '-r']
+        do(cmd)
+
+
+@cli.command()
+def clean():
+    for base, dirs, files in os.walk('.'):
+        if base.endswith(os.path.sep + '__pycache__' + os.path.sep):
+            for file in files:
+                os.unlink(os.path.join(base, file))
+            os.rmdir(base)
+
+
+@cli.command()
+@click.option(
+    '--answers', '-a', default='answers.json',
+    help='Path to answers file',
+)
+@click.option(
+    '--rerun', '-r', is_flag=True,
+    help='Force Pytest re-run',
+)
+def test(answers, rerun):
+    import json
+    import subprocess
+
+    # Load answers file
+    if os.path.exists(answers):
+        answers = json.load(open(answers))
+    else:
+        answers = None
+
+    # Collect results
+    results = {}
+    fname = 'test-results.json'
+    for dir in os.listdir(os.getcwd()):
+        if not os.path.isdir(dir):
+            continue
+
+        if rerun or not os.path.exists(os.path.join(dir, fname)):
+            env = {'PYTHONPATH': '.'}
+            subprocess.run(['pytest', '--json-report', '--json-report-file', fname],
+                           cwd=dir, env=env)
+
+        with open(os.path.join(dir, fname)) as fd:
+            data = json.load(fd)
+            data = data['tests']
+            data = {obj['nodeid']: obj['outcome'] == 'passed' for obj in data}
+            results[dir] = data
+
+    # Get answer grader
+    tests = set()
+    for obj in results.values():
+        tests.update(obj)
+
+    for k, v in results.items():
+        keys = set(v)
+        if tests - keys:
+            lst = '\n  * '.join(tests - keys)
+            print(f'Missing tests [{k}]:\n  * {lst}')
+
+    # Answer file
+    if answers is None:
+        data = {k: 1 for k in sorted(tests)}
+        print(json.dumps(data, indent=4))
+        return
+
+    # Save grades
+    import pandas as pd
+    grades = []
+    total = sum(answers.values())
+    for gid, tests in results.items():
+        grade = sum(answers[tid] for tid, is_ok in tests.items() if is_ok)
+        grades.append([gid, 100 * grade / total])
+    df = pd.DataFrame(grades, columns=['group', 'grade'])
+    df.to_csv('grades.csv')
+
+
+@cli.command()
+@click.argument('cmd')
+def run(cmd):
+    import subprocess
+
+    for dir in dirs():
+        subprocess.run(cmd, shell=True, cwd=dir)
+
+
+def dirs(path=None):
+    path = path or os.getcwd()
+    for dir in os.listdir(path):
+        if not os.path.isdir(dir):
+            continue
+        yield dir
+
+
+# ==============================================================================
+# Tools
+# ==============================================================================
+@cli.command()
+@click.argument('source', type=click.File('r'))
+@click.option(
+    '--output', '-o', default=None,
+    type=click.File('w'), help='Output file')
+@click.option(
+    '--info', '-i', is_flag=True,
+    help='Only prints basic information about file',
+)
+def calendar(source, output, info):
+    from ..tools import calendar
+
+    cal = calendar.parse(source.read())
+    if info:
+        click.echo(cal.describe())
+    elif output:
+        output.write(str(cal))
+    else:
+        click.echo(cal)
+
+
+# ==============================================================================
 # Main
 # ==============================================================================
 def main():

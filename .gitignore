@@ -4,3 +4,7 @@ dist/
 .vscode
 .coverage
 __pycache__/
+.mypy_cache/
+.mypy_cache/
+.hypothesis/
+prs/
