@@ -1,0 +1,10 @@
+# {{ course.name }}
+
+{{ course.description }}
+
+## Alunos
+
+{% for student in course.students %}
+{{ student.markdown() }}
+
+{% endfor %}

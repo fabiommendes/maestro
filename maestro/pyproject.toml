@@ -1,0 +1,60 @@
+[project]
+name = "maestro"
+version = "0.2.0"
+description = "Maestro tools are designed to help me manage classrooms and student grades. If you are a teacher, it might help you as well 🙃"
+readme = "README.md"
+authors = [
+    { name = "Fábio Macêdo Mendes", email = "fabiomacedomendes@gmail.com" },
+]
+requires-python = ">=3.10"
+dependencies = [
+    "cachetools>=6.1.0",
+    "jq>=1.9.1",
+    "pandas>=2.3.0",
+    "pandas-stubs>=2.2.3.250527",
+    "pt-core-news-sm",
+    "pt-core-news-md",
+    # "pt-core-news-lg",
+    "pydantic>=2.11.7",
+    "pydantic-yaml>=1.5.1",
+    "pytest>=8.4.1",
+    "returns[compatible-mypy]>=0.25.0",
+    "rich>=14.0.0",
+    "ruamel-yaml>=0.18.14",
+    # "spacy[pt-core-news-lg]>=3.8.7",
+    "textual[syntax]>=3.4.0",
+    "typeguard>=4.4.4",
+    "typer>=0.16.0",
+    "types-cachetools>=6.1.0.20250717",
+    "toolz>=1.0.0",
+    "trio>=0.30.0",
+    "pyflame>=0.3.2",
+]
+
+[project.scripts]
+maestro = "maestro.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+
+[dependency-groups]
+dev = [
+    "flameprof>=0.4",
+    "ipython>=8.37.0",
+    "pytest>=8.4.1",
+    "textual-dev>=1.7.0",
+]
+
+
+[tool.pytest.ini_options]
+addopts = ["--doctest-modules", "--ignore=example/", "--ignore=old/"]
+
+[tool.uv.sources]
+pt-core-news-sm = { url = "https://github.com/explosion/spacy-models/releases/download/pt_core_news_sm-3.8.0/pt_core_news_sm-3.8.0.tar.gz" }
+pt-core-news-md = { url = "https://github.com/explosion/spacy-models/releases/download/pt_core_news_md-3.8.0/pt_core_news_md-3.8.0.tar.gz" }
+pt-core-news-lg = { url = "https://github.com/explosion/spacy-models/releases/download/pt_core_news_lg-3.8.0/pt_core_news_lg-3.8.0.tar.gz" }
+
+[tool.ruff]
+target-version = "py313"

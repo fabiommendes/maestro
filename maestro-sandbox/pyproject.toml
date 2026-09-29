@@ -1,0 +1,26 @@
+[project]
+name = "maestro-sandbox"
+version = "0.1.0"
+description = "Simple sandbox solutions for running untrusted code."
+readme = "README.md"
+authors = [
+    { name = "Fábio Macêdo Mendes", email = "fabiomacedomendes@gmail.com" },
+]
+requires-python = ">=3.13"
+dependencies = [
+    "restrictedpython>=8.0",
+    "trio>=0.31.0",
+    "typer>=0.19.2",
+]
+
+[project.scripts]
+maestro-sandbox = "maestro_sandbox.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv.workspace]
+members = [
+    "examples/uv",
+]

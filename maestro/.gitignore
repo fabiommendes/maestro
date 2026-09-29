@@ -1,0 +1,7 @@
+example/
+old/
+.venv/
+.pytest-cache/
+.mypy_cache/
+.vscode/
+__pycache__/

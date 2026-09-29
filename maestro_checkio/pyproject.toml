@@ -1,0 +1,17 @@
+[build-system]
+build-backend = "flit_core.buildapi"
+requires = ["flit_core >=3.2,<4"]
+
+[project]
+authors = [{name = "Fábio Macêdo Mendes", email = "fabiomacedomendes@gmail.com"}]
+classifiers = ["License :: OSI Approved :: MIT License"]
+dynamic = ["version", "description"]
+license = {file = "LICENSE"}
+name = "maestro.checkio"
+requires = ["requests", "pandas", "click"]
+
+[project.urls]
+Home = "http://github.com/fabiommendes/checkio_api"
+
+[project.scripts]
+maestro-checkio = "maestro.checkio.cli:main"
